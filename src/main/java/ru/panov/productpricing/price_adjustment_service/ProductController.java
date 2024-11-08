@@ -1,6 +1,7 @@
 package ru.panov.productpricing.price_adjustment_service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,9 +17,10 @@ public class ProductController {
     }
 
     @PostMapping("/adjust-prices")
-    public List<Product> adjustPrices(
+    public ResponseEntity<List<Product>> adjustPrices(
             @RequestBody List<Product> products,
             @RequestParam double percent) {
-        return priceAdjustmentService.adjustPrices(products, percent);
+        List<Product> updatedProducts = priceAdjustmentService.adjustPrices(products, percent);
+        return ResponseEntity.ok(updatedProducts);
     }
 }
